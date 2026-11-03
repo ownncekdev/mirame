@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIRAME — Essential Collection</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#090909;color:#f5f5f5;font-family:Arial,sans-serif}
+header{padding:24px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292929}
+.logo{font-size:25px;letter-spacing:7px;font-weight:bold}
+header span{font-size:10px;letter-spacing:3px;color:#aaa}
+.hero{padding:75px 7% 35px;text-align:center}
+.hero small{letter-spacing:5px;color:#aaa}
+.hero h1{font-size:clamp(38px,8vw,85px);letter-spacing:8px;margin:20px 0}
+.hero p{color:#999;line-height:1.8;font-size:13px}
+.product{max-width:1100px;margin:35px auto;padding:20px;display:grid;grid-template-columns:1.1fr 1fr;gap:55px}
+.gallery{position:relative}
+.gallery img{width:100%;aspect-ratio:4/5;object-fit:cover;background:#171717;border:1px solid #292929}
+.gallery button{position:absolute;top:48%;background:#111;color:white;border:1px solid #555;padding:12px;cursor:pointer}
+.prev{left:12px}.next{right:12px}
+.counter{text-align:center;color:#888;font-size:11px;padding:12px}
+.info{padding:15px 0}
+.tag{font-size:10px;letter-spacing:4px;color:#aaa}
+.info h2{font-size:35px;margin:18px 0 10px}
+.price{font-size:22px;margin-bottom:22px}
+.desc{color:#aaa;line-height:1.8;font-size:13px;margin-bottom:28px}
+.label{font-size:11px;letter-spacing:2px;margin:22px 0 12px}
+.sizes{display:flex;gap:9px;flex-wrap:wrap}
+.sizes button{background:transparent;color:white;border:1px solid #555;padding:12px 18px;cursor:pointer}
+.sizes button.active{background:white;color:black}
+input{background:#151515;color:white;border:1px solid #555;padding:12px;width:75px}
+.order{display:block;width:100%;margin-top:28px;background:#f5f5f5;color:#080808;padding:17px;text-align:center;text-decoration:none;font-weight:bold;letter-spacing:2px}
+.order:hover{background:#ccc}
+.article{padding:65px 8%;border-top:1px solid #292929;text-align:center}
+.article h2{letter-spacing:4px;margin-bottom:20px}
+.article p{max-width:650px;margin:auto;color:#999;line-height:2;font-size:13px}
+footer{text-align:center;padding:30px;color:#777;font-size:10px;letter-spacing:3px;border-top:1px solid #292929}
+@media(max-width:700px){
+.product{grid-template-columns:1fr;gap:20px;padding:18px}
+.hero{padding:55px 5% 20px}
+.info h2{font-size:29px}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">MIRAME</div>
+<span>EST. 2026</span>
+</header>
+
+<section class="hero">
+<small>INDEPENDENT CLOTHING LABEL</small>
+<h1>BEYOND THE ORDINARY.</h1>
+<p>Simple form. Strong identity.<br>Discover the MIRAME collection.</p>
+</section>
+
+<main class="product">
+<div>
+<div class="gallery">
+<img id="photo" src="front.jpg" alt="MIRAME T-shirt tampak depan">
+<button class="prev" onclick="changePhoto(-1)">❮</button>
+<button class="next" onclick="changePhoto(1)">❯</button>
+</div>
+<div class="counter" id="counter">01 / 02 — FRONT VIEW</div>
+</div>
+
+<div class="info">
+<div class="tag">MIRAME / COLLECTION 001</div>
+<h2>GRAPHIC T-SHIRT</h2>
+<div class="price" id="price">Rp 150.000</div>
+<p class="desc">A statement of personal identity. Dirancang dengan tampilan minimalis dan grafis khas MIRAME. Dua sisi desain yang memberikan karakter berbeda.</p>
+
+<div class="label">SELECT SIZE</div>
+<div class="sizes">
+<button onclick="chooseSize(this)">S</button>
+<button onclick="chooseSize(this)">M</button>
+<button onclick="chooseSize(this)">L</button>
+<button onclick="chooseSize(this)">XL</button>
+<button onclick="chooseSize(this)">XXL</button>
+</div>
+
+<div class="label">QUANTITY</div>
+<input id="qty" type="number" min="1" value="1">
+
+<a class="order" id="order" href="#" onclick="return orderNow()">ORDER VIA WHATSAPP ↗</a>
+<p class="desc" style="margin-top:18px">Pesanan akan diteruskan melalui WhatsApp MIRAME.</p>
+</div>
+</main>
+
+<section class="article">
+<h2>THE MIRAME STORY</h2>
+<p>MIRAME hadir sebagai representasi ekspresi dan karakter personal. Kami percaya bahwa pakaian bukan sekadar sesuatu yang dikenakan, tetapi juga bagian dari cara seseorang menunjukkan identitasnya. Dibuat untuk mereka yang memilih tampil dengan karakter sendiri.</p>
+</section>
+
+<footer>© 2026 MIRAME — ALL RIGHTS RESERVED</footer>
+
+<script>
+let current=0;
+const photos=[
+{src:"front.jpg",label:"01 / 02 — FRONT VIEW"},
+{src:"back.jpg",label:"02 / 02 — BACK VIEW"}
+];
+let selectedSize="";
+function changePhoto(direction){
+current=(current+direction+2)%2;
+document.getElementById("photo").src=photos[current].src;
+document.getElementById("counter").textContent=photos[current].label;
+}
+function chooseSize(button){
+document.querySelectorAll(".sizes button").forEach(b=>b.classList.remove("active"));
+button.classList.add("active");
+selectedSize=button.textContent;
+}
+function orderNow(){
+if(!selectedSize){alert("Silakan pilih ukuran kaos terlebih dahulu.");return false;}
+let qty=Math.max(1,parseInt(document.getElementById("qty").value)||1);
+let message=`Halo MIRAME, saya ingin memesan:%0AProduk: Graphic T-Shirt%0AUkuran: ${selectedSize}%0AJumlah: ${qty}%0AHarga satuan: ${document.getElementById("price").textContent}`;
+window.open("https://wa.me/6285706120423?text="+message,"_blank");
+return false;
+}
+let startX=0;
+document.getElementById("photo").addEventListener("touchstart",e=>startX=e.touches[0].clientX);
+document.getElementById("photo").addEventListener("touchend",e=>{
+let distance=e.changedTouches[0].clientX-startX;
+if(Math.abs(distance)>45)changePhoto(distance<0?1:-1);
+});
+</script>
+</body>
+</html>
